@@ -1033,6 +1033,8 @@ lika_build_iso_archive () {
 	local iso_profile_dir_path="${REF_ISO_PROFILE_DIR_PATH}"
 
 	local build_arch="${REF_BUILD_ARCH}"
+	local build_respin="${REF_BUILD_RESPIN}"
+	local build_agent_args="--debug --verbose --variant ${build_respin}"
 	local build_agent_file_name="build.sh"
 	local build_agent="./${build_agent_file_name}"
 	local build_agent_file_path="${iso_profile_dir_path}/${build_agent_file_name}"
@@ -1050,9 +1052,9 @@ lika_build_iso_archive () {
 	## ## iso build start
 	##
 	util_error_echo
-	util_error_echo "${build_agent}"
+	util_error_echo "${build_agent} ${build_agent_args}"
 	util_error_echo
-	"${build_agent}"
+	"${build_agent}" ${build_agent_args}
 
 
 	##
