@@ -191,7 +191,7 @@ master_var_init () {
 
 	DEFAULT_BUILD_RESPIN="xfce"
 	REF_BUILD_RESPIN="${REF_BUILD_RESPIN:=$DEFAULT_BUILD_RESPIN}"
-	REF_BUILD_RESPIN_OPTION_LIST="xfce kde"
+	REF_BUILD_RESPIN_OPTION_LIST="xfce kde gnome mate i3 e17 minimal"
 
 
 	##
@@ -1138,6 +1138,18 @@ lika_build_iso_start () {
 
 
 ##
+## ## Model / Start
+##
+
+model_start () {
+
+	lika_build_iso_start "${@}"
+
+	return 0
+}
+
+
+##
 ## ## Limit / Root User Required
 ##
 
@@ -1157,7 +1169,7 @@ limit_root_user_required () {
 		util_error_echo
 		util_error_echo "> Please Run As Root"
 		util_error_echo
-		util_error_echo "Example: sudo ./${REF_CMD_FILE_NAME} amd64"
+		util_error_echo "Example: sudo ./${REF_CMD_FILE_NAME}"
 		util_error_echo
 
 		#sleep 2
@@ -1213,15 +1225,18 @@ main_signal_bind () {
 }
 
 
+
+
+
 ##
-## ## Msg / Help
+## ## Msg / Help / Respin
 ##
 
-msg_help_build_arch_required () {
+msg_help_build_respin_required () {
 
 	util_error_echo
 	util_error_echo "##"
-	util_error_echo "## ## Build Arch Required"
+	util_error_echo "## ## Build Respin Required"
 	util_error_echo "##"
 
 	util_error_echo
@@ -1229,6 +1244,24 @@ msg_help_build_arch_required () {
 	util_error_echo
 
 }
+
+msg_help_build_respin_not_supported () {
+
+	util_error_echo
+	util_error_echo "##"
+	util_error_echo "## ## Build Respin Not Supported"
+	util_error_echo "##"
+
+	util_error_echo
+	msg_usage_body_main
+	util_error_echo
+
+}
+
+
+##
+## ## Msg / Help / Arch
+##
 
 msg_help_build_arch_not_supported () {
 
@@ -1238,10 +1271,15 @@ msg_help_build_arch_not_supported () {
 	util_error_echo "##"
 
 	util_error_echo
-	msg_usage_body_main
+	msg_usage_body_arch
 	util_error_echo
 
 }
+
+
+##
+## ## Msg / Help / Locale
+##
 
 msg_help_build_locale_not_supported () {
 
@@ -1256,31 +1294,23 @@ msg_help_build_locale_not_supported () {
 
 }
 
-msg_help_build_respin_not_supported () {
 
-	util_error_echo
-	util_error_echo "##"
-	util_error_echo "## ## Build Respin Not Supported"
-	util_error_echo "##"
-
-	util_error_echo
-	msg_usage_body_respin
-	util_error_echo
-
-}
+##
+## ## Msg / Body
+##
 
 msg_usage_body_main () {
 
 
-	util_error_echo "> Build Arch Options: ${REF_BUILD_ARCH_OPTION_LIST}"
+	util_error_echo "> Build Respin Options: ${REF_BUILD_RESPIN_OPTION_LIST}"
 	util_error_echo
-	util_error_echo "SYNOPSIS : sudo ./${REF_CMD_FILE_NAME} [build_arch]"
+	util_error_echo "SYNOPSIS : sudo ./${REF_CMD_FILE_NAME} [build_respin]"
 	util_error_echo
-	util_error_echo "Example  : sudo ./${REF_CMD_FILE_NAME} amd64"
+	util_error_echo "Example  : sudo ./${REF_CMD_FILE_NAME} xfce"
 	util_error_echo
-	util_error_echo "Example  : sudo ./${REF_CMD_FILE_NAME} amd64"
+	util_error_echo "Example  : sudo ./${REF_CMD_FILE_NAME} kde"
 	util_error_echo
-	util_error_echo "Example  : sudo ./${REF_CMD_FILE_NAME} unstable"
+	util_error_echo "Example  : sudo ./${REF_CMD_FILE_NAME} gnome"
 
 
 	return 0
@@ -1301,20 +1331,21 @@ msg_usage_body_locale () {
 	return 0
 }
 
-msg_usage_body_respin () {
+msg_usage_body_arch () {
 
 
-	util_error_echo "> Build Respin Options: ${REF_BUILD_RESPIN_OPTION_LIST}"
+	util_error_echo "> Build Arch Options: ${REF_BUILD_ARCH_OPTION_LIST}"
 	util_error_echo
-	util_error_echo "SYNOPSIS : sudo REF_BUILD_RESPIN=xfce ./${REF_CMD_FILE_NAME} [build_arch]"
+	util_error_echo "SYNOPSIS : sudo REF_BUILD_ARCH=amd64 ./${REF_CMD_FILE_NAME} [build_arch]"
 	util_error_echo
-	util_error_echo "Example  : sudo REF_BUILD_RESPIN=xfce ./${REF_CMD_FILE_NAME} amd64"
+	util_error_echo "Example  : sudo REF_BUILD_ARCH=amd64 ./${REF_CMD_FILE_NAME} xfce"
 	util_error_echo
-	util_error_echo "Example  : sudo REF_BUILD_RESPIN=kde ./${REF_CMD_FILE_NAME} amd64"
+	util_error_echo "Example  : sudo REF_BUILD_ARCH=arm64 ./${REF_CMD_FILE_NAME} kde"
 
 
 	return 0
 }
+
 
 ##
 ## ## Msg / Args
@@ -1323,9 +1354,9 @@ msg_usage_body_respin () {
 msg_master_args () {
 
 	util_error_echo
-	util_error_echo "Build: REF_BUILD_ARCH=${REF_BUILD_ARCH}"
-	util_error_echo "Build: REF_BUILD_LOCALE=${REF_BUILD_LOCALE}"
 	util_error_echo "Build: REF_BUILD_RESPIN=${REF_BUILD_RESPIN}"
+	util_error_echo "Build: REF_BUILD_LOCALE=${REF_BUILD_LOCALE}"
+	util_error_echo "Build: REF_BUILD_ARCH=${REF_BUILD_ARCH}"
 	util_error_echo
 
 	return 0
@@ -1339,10 +1370,6 @@ msg_master_args () {
 master_arg_build_arch () {
 
 	util_debug_echo
-	util_debug_echo "Arg: 1=${1}"
-
-	REF_BUILD_ARCH="${1}"
-
 
 	if [[ -z "${REF_BUILD_ARCH}" ]]; then
 		REF_BUILD_ARCH="${DEFAULT_BUILD_ARCH}"
@@ -1431,7 +1458,11 @@ master_arg_build_locale () {
 
 master_arg_build_respin () {
 
+
 	util_debug_echo
+	util_debug_echo "Arg: 1=${1}"
+
+	REF_BUILD_RESPIN="${1}"
 
 
 	if [[ -z "${REF_BUILD_RESPIN}" ]]; then
@@ -1479,6 +1510,8 @@ master_arg_build_respin () {
 
 
 
+
+
 ##
 ## ## Main / Args
 ##
@@ -1489,7 +1522,7 @@ _main_check_args_size_ () {
 
 	if [[ ${1} -le 0 ]]; then
 
-		msg_help_build_arch_required
+		msg_help_build_respin_required
 
 		exit 1
 
@@ -1509,11 +1542,50 @@ _main_init_args_ () {
 	util_debug_echo "##"
 
 
+	##
+	## ## Args / Init
+	##
+
 	master_arg_build_arch "${@}"
 
 	master_arg_build_locale "${@}"
 
 	master_arg_build_respin "${@}"
+
+
+
+
+
+
+	##
+	## ## Args / Variable / Dump Again
+	##
+
+	#util_debug_echo
+	#util_debug_echo "##"
+	#util_debug_echo "## ## Args / Dump After Init"
+	#util_debug_echo "##"
+
+	#args_var_dump
+
+
+	##
+	## ## Model / Variable / Init
+	##
+
+	#model_var_init
+	#model_var_dump
+
+
+	##
+	## ## Master / Variable / Init
+	##
+
+	#master_var_init
+	#master_var_dump
+
+
+
 
 
 	util_debug_echo
@@ -1522,17 +1594,19 @@ _main_init_args_ () {
 }
 
 
+
+
 ##
 ## ## Main / Start
 ##
 
 __main__ () {
 
-	lika_build_iso_start "${@}"
+	model_start "${@}"
 
 }
 
-_main_check_args_size_ "${#}"
+#_main_check_args_size_ "${#}"
 
 _main_init_args_ "${@}"
 
