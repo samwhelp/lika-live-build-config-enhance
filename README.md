@@ -23,7 +23,7 @@
 | [lika-live-build-config](https://samwhelp.github.io/lika-live-build-config/) | [GitHub](https://github.com/samwhelp/lika-live-build-config) |
 
 
-> Please using another project as following to start build process.
+> Please using `another project as following` to start build process.
 
 | Link | GitHub |
 | ---- | ------ |
