@@ -16,7 +16,7 @@
 
 ## Project
 
-> The project lika-live-build-config is building skeleton.
+> The project `lika-live-build-config` is building skeleton.
 
 | Link | GitHub |
 | ---- | ------ |
