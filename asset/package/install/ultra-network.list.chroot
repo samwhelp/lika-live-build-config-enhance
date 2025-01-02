@@ -21,27 +21,9 @@ iw
 ##
 ## ### Notice
 ##
-## > Host OS: systemd-resolved required installed before building
+## > if want to install package: [systemd-resolved]
 ##
-## On Host OS, run
-##
-## ``` sh
-## sudo apt-get install systemd-resolved
-## ```
-##
-## Then reboot.
-##
-## run
-##
-## ``` sh
-## file /etc/resolv.conf
-## ```
-##
-## show
-##
-## ```
-## /etc/resolv.conf: symbolic link to ../run/systemd/resolve/stub-resolv.conf
-## ```
+## > fix building error, create hook file: [1001-create-resolv-conf.hook.chroot]
 ##
 
 systemd-resolved
