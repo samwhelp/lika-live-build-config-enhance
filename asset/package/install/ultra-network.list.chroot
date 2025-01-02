@@ -19,8 +19,19 @@ iw
 ##
 ## ## Package / Network / Base
 ##
+## ### Notice
+##
+## > Host OS: systemd-resolved required installed before building
+##
 
 systemd-resolved
+
+
+
+
+##
+## ## Package / Network / Base
+##
 
 openconnect
 openvpn
