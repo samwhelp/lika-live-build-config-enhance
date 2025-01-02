@@ -40,7 +40,7 @@ iw
 ## show
 ##
 ## ```
-/etc/resolv.conf: symbolic link to ../run/systemd/resolve/stub-resolv.conf
+## /etc/resolv.conf: symbolic link to ../run/systemd/resolve/stub-resolv.conf
 ## ```
 ##
 
