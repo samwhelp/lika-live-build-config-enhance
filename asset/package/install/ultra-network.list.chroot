@@ -1,0 +1,37 @@
+
+
+##
+## # Network / Ultra
+##
+
+
+
+
+##
+## ## Package / Network / Tool
+##
+
+iw
+
+
+
+
+##
+## ## Package / Network / Base
+##
+
+systemd-resolved
+
+openconnect
+openvpn
+openvpn-systemd-resolved
+
+
+
+
+##
+## ## Package / Network / Network Manager
+##
+
+network-manager-openconnect-gnome
+network-manager-openvpn-gnome
