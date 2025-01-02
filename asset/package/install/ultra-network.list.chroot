@@ -17,11 +17,31 @@ iw
 
 
 ##
-## ## Package / Network / Base
+## ## Package / Network / systemd-resolved
 ##
 ## ### Notice
 ##
 ## > Host OS: systemd-resolved required installed before building
+##
+## On Host OS, run
+##
+## ``` sh
+## sudo apt-get install systemd-resolved
+## ```
+##
+## Then reboot.
+##
+## run
+##
+## ``` sh
+## file /etc/resolv.conf
+## ```
+##
+## show
+##
+## ```
+/etc/resolv.conf: symbolic link to ../run/systemd/resolve/stub-resolv.conf
+## ```
 ##
 
 systemd-resolved
